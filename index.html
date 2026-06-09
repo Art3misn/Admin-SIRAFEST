@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Admin COD - Jalan Santai
+  </title>
+
+  <!-- FONT -->
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- ICON -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <!-- CSS -->
+
+  <link
+    rel="stylesheet"
+    href="./admin.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="auth-wrapper" id="authWrapper">
+
+    <div class="auth-card">
+
+      <div class="auth-header">
+        <h2>Login Admin</h2>
+        <p>Masukkan username & password</p>
+      </div>
+
+      <div class="auth-form" id="loginPanel">
+        <label for="adminUsername">Username</label>
+        <input type="text" id="adminUsername" autocomplete="username" />
+
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" autocomplete="current-password" />
+
+        <button class="auth-btn" id="loginBtn" type="button">
+          Login
+        </button>
+
+        <p class="auth-error" id="loginError" style="display:none"></p>
+      </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="layout" id="app"> 
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
+
+
+    <aside class="sidebar">
+
+      <h2>
+        SIRAFEST
+      </h2>
+
+      <p>
+        Admin Dashboard
+      </p>
+
+      <div class="menu">
+
+        <a href="#orders">
+          <i class="fa-solid fa-cart-shopping"></i>
+          Orders
+        </a>
+
+        <a href="#">
+          <i class="fa-solid fa-chart-line"></i>
+          Statistik
+        </a>
+
+        <a href="javascript:void(0)" onclick="logoutAdmin()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Log out
+        </a>
+
+      </div>
+
+
+    </aside>
+
+    <!-- =========================================
+         MAIN
+    ========================================= -->
+
+    <main class="main">
+
+      <!-- TOPBAR -->
+
+      <div class="topbar">
+
+        <div>
+
+          <h1>
+            Dashboard Admin
+          </h1>
+
+          <p>
+            Monitoring pemesanan kupon SIRAFEST
+          </p>
+
+        </div>
+
+        <button
+          class="refresh-btn"
+          onclick="location.reload()"
+        >
+
+          <i class="fa-solid fa-rotate"></i>
+
+          Refresh
+
+        </button>
+
+      </div>
+
+      <!-- =========================================
+           STATS
+      ========================================= -->
+
+      <div class="stats">
+
+        <div class="card">
+
+          <h3 id="totalOrders">
+            0
+          </h3>
+
+          <p>
+            Total Order
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3 id="pendingOrders">
+            0
+          </h3>
+
+          <p>
+            Pending
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3 id="completedOrders">
+            0
+          </h3>
+
+          <p>
+            Selesai
+          </p>
+
+        </div>
+
+        <div class="card">
+
+          <h3 id="totalRevenue">
+            Rp0
+          </h3>
+
+          <p>
+            Total Pendapatan
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- =========================================
+           FILTER
+      ========================================= -->
+
+      <div class="filter-bar">
+
+        <input
+          type="text"
+          id="search"
+          placeholder="Cari nama / WhatsApp..."
+        >
+
+        <select id="filterStatus">
+
+          <option value="">
+            Semua Status
+          </option>
+
+          <option value="pending">
+            Pending
+          </option>
+
+          <option value="processed">
+            Diproses
+          </option>
+
+          <option value="done">
+            Selesai
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- =========================================
+           TABLE
+      ========================================= -->
+
+      <section
+        id="orders"
+        class="table-section"
+      >
+
+        <div class="table-wrapper">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>Nama</th>
+
+                <th>WhatsApp</th>
+
+                <th>Wilayah</th>
+
+                <th>Alamat</th>
+
+                <th>Qty</th>
+
+                <th>Pembayaran</th>
+
+                <th>Total</th>
+
+                <th>Bukti</th>
+
+                <th>Status</th>
+
+                <th>Waktu</th>
+
+                <th>Aksi</th>
+
+              </tr>
+
+            </thead>
+
+            <tbody id="orderTable">
+
+              <!-- AUTO FIREBASE -->
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =========================================
+       PREVIEW IMAGE
+  ========================================= -->
+
+  <div
+    class="preview-modal"
+    id="previewModal"
+  >
+
+    <button
+      class="close-preview"
+      id="closePreview"
+    >
+
+      <i class="fa-solid fa-xmark"></i>
+
+    </button>
+
+    <img
+      id="previewImage"
+      src=""
+      alt="Preview Bukti"
+    >
+
+  </div>
+
+  <!-- =========================================
+       AUDIO
+  ========================================= -->
+
+  <audio
+    id="notifSound"
+    src="/asset/Notifikasi order.wav"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="successSound"
+    src="/asset/Sound login.wav"
+    preload="auto"
+  ></audio>
+
+  <!-- =========================================
+       SCRIPT
+  ========================================= -->
+
+  <script
+    type="module"
+    src="admin.js"
+  ></script>
+
+</body>
+</html>
+
