@@ -1,0 +1,23 @@
+{
+  "name": "Admin COD - Jalan Santai",
+  "short_name": "SIRAFEST",
+  "description": "Dashboard Admin Monitoring pemesanan kupon SIRAFEST",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-preferred",
+  "icons": [
+    {
+      "src": "/asset/Adhigana prapti.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/asset/Adhigana prapti.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
