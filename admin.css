@@ -97,7 +97,6 @@ body{
   display:none;
 }
 
-
 .auth-card{
   width:100%;
   max-width:520px;
@@ -202,96 +201,6 @@ body{
   font-weight:700;
 }
 
-.auth-settings{
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:20px;
-  padding:18px;
-}
-
-.auth-settings-title{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:900;
-  color:#fff;
-  margin-bottom:12px;
-}
-
-.auth-settings label{
-  display:block;
-  margin-top:10px;
-  font-size:13px;
-  color:var(--gray);
-  font-weight:600;
-}
-
-.auth-settings input{
-  width:100%;
-  margin-top:6px;
-
-  border:none;
-  outline:none;
-  padding:12px 14px;
-  border-radius:14px;
-  background:#111826;
-  border:1px solid rgba(255,255,255,.06);
-  color:#fff;
-  font-size:14px;
-}
-
-.auth-secondary-btn{
-  margin-top:14px;
-
-  width:100%;
-  border:none;
-  border-radius:16px;
-  padding:14px 16px;
-
-  cursor:pointer;
-
-  background:rgba(105,215,232,.14);
-  color:var(--primary);
-
-  font-weight:900;
-  transition:.25s;
-}
-
-.auth-secondary-btn:hover{
-  transform:translateY(-2px);
-  background:rgba(105,215,232,.2);
-}
-
-.auth-hint{
-  margin-top:10px;
-  color:var(--gray);
-  font-size:13px;
-  line-height:1.6;
-}
-
-.auth-quick-actions{
-  margin-top:14px;
-}
-
-.auth-ghost-btn{
-  width:100%;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
-  padding:12px 14px;
-
-  background:transparent;
-  color:#fff;
-  cursor:pointer;
-
-  font-weight:800;
-  transition:.25s;
-}
-
-.auth-ghost-btn:hover{
-  background:rgba(255,255,255,.04);
-}
-
-
 /* =========================================
    SIDEBAR
 ========================================= */
@@ -393,6 +302,12 @@ body{
 .topbar p{
   color:var(--gray);
   font-size:14px;
+}
+
+.topbar-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .refresh-btn{
@@ -763,19 +678,55 @@ tbody tr:hover{
 }
 
 /* =========================================
-   MOBILE
+   INSTALL BUTTON (PWA)
+========================================= */
+
+.install-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.3s, transform 0.15s;
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 10px 30px rgba(16,185,129,.18);
+}
+
+.install-btn:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
+}
+
+.install-btn:active {
+  transform: translateY(0);
+}
+
+.install-btn.hidden {
+  display: none !important;
+}
+
+.refresh-btn span,
+.install-btn span{
+  display:inline;
+}
+
+/* =========================================
+   RESPONSIVE
 ========================================= */
 
 @media(max-width:1100px){
-
   .stats{
     grid-template-columns:repeat(2,1fr);
   }
-
 }
 
 @media(max-width:900px){
-
   .layout{
     flex-direction:column;
   }
@@ -791,10 +742,13 @@ tbody tr:hover{
     padding:20px;
   }
 
+  .topbar-actions{
+    width:100%;
+    justify-content:flex-start;
+  }
 }
 
 @media(max-width:700px){
-
   .topbar{
     flex-direction:column;
     align-items:flex-start;
@@ -815,11 +769,9 @@ tbody tr:hover{
   .filter-bar input{
     min-width:100%;
   }
-
 }
 
 @media(max-width:500px){
-
   .main{
     padding:16px;
   }
@@ -842,4 +794,11 @@ tbody tr:hover{
     justify-content:center;
   }
 
+  .refresh-btn span,
+  .install-btn span{display:none;}
+
+  .install-btn{
+    width:auto;
+  }
 }
+
