@@ -2,50 +2,25 @@
 <html lang="id">
 
 <head>
-
   <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>
     Admin COD - Jalan Santai
   </title>
 
-  <!-- FONT -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#2563eb">
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-  <!-- ICON -->
-
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  />
-
-  <!-- CSS -->
-
-  <link
-    rel="stylesheet"
-    href="./admin.css"
-  >
-
+  <link rel="stylesheet" href="./admin.css">
 </head>
 
 <body>
@@ -77,12 +52,7 @@
 
   </div>
 
-  <div class="layout" id="app"> 
-
-    <!-- =========================================
-         SIDEBAR
-    ========================================= -->
-
+  <div class="layout" id="app">
 
     <aside class="sidebar">
 
@@ -113,182 +83,91 @@
 
       </div>
 
-
     </aside>
-
-    <!-- =========================================
-         MAIN
-    ========================================= -->
 
     <main class="main">
 
-      <!-- TOPBAR -->
-
       <div class="topbar">
-
         <div>
-
-          <h1>
-            Dashboard Admin
-          </h1>
-
-          <p>
-            Monitoring pemesanan kupon SIRAFEST
-          </p>
-
+          <h1>Dashboard Admin</h1>
+          <p>Monitoring pemesanan kupon SIRAFEST</p>
         </div>
 
-        <button
-          class="refresh-btn"
-          onclick="location.reload()"
-        >
+        <div class="topbar-actions">
+          <button id="pwaInstallBtn" class="install-btn hidden" type="button" aria-label="Install aplikasi">
+            <i class="fa-solid fa-download"></i>
+            <span>Install Aplikasi</span>
+          </button>
 
-          <i class="fa-solid fa-rotate"></i>
-
-          Refresh
-
-        </button>
-
+          <button class="refresh-btn" onclick="location.reload()" type="button" aria-label="Refresh">
+            <i class="fa-solid fa-rotate"></i>
+            <span>Refresh</span>
+          </button>
+        </div>
       </div>
-
-      <!-- =========================================
-           STATS
-      ========================================= -->
 
       <div class="stats">
 
         <div class="card">
-
-          <h3 id="totalOrders">
-            0
-          </h3>
-
-          <p>
-            Total Order
-          </p>
-
+          <h3 id="totalOrders">0</h3>
+          <p>Total Order</p>
         </div>
 
         <div class="card">
-
-          <h3 id="pendingOrders">
-            0
-          </h3>
-
-          <p>
-            Pending
-          </p>
-
+          <h3 id="pendingOrders">0</h3>
+          <p>Pending</p>
         </div>
 
         <div class="card">
-
-          <h3 id="completedOrders">
-            0
-          </h3>
-
-          <p>
-            Selesai
-          </p>
-
+          <h3 id="completedOrders">0</h3>
+          <p>Selesai</p>
         </div>
 
         <div class="card">
-
-          <h3 id="totalRevenue">
-            Rp0
-          </h3>
-
-          <p>
-            Total Pendapatan
-          </p>
-
+          <h3 id="totalRevenue">Rp0</h3>
+          <p>Total Pendapatan</p>
         </div>
 
       </div>
 
-      <!-- =========================================
-           FILTER
-      ========================================= -->
-
       <div class="filter-bar">
 
-        <input
-          type="text"
-          id="search"
-          placeholder="Cari nama / WhatsApp..."
-        >
+        <input type="text" id="search" placeholder="Cari nama / WhatsApp...">
 
         <select id="filterStatus">
 
-          <option value="">
-            Semua Status
-          </option>
-
-          <option value="pending">
-            Pending
-          </option>
-
-          <option value="processed">
-            Diproses
-          </option>
-
-          <option value="done">
-            Selesai
-          </option>
+          <option value="">Semua Status</option>
+          <option value="pending">Pending</option>
+          <option value="processed">Diproses</option>
+          <option value="done">Selesai</option>
 
         </select>
 
       </div>
 
-      <!-- =========================================
-           TABLE
-      ========================================= -->
-
-      <section
-        id="orders"
-        class="table-section"
-      >
+      <section id="orders" class="table-section">
 
         <div class="table-wrapper">
 
           <table>
 
             <thead>
-
               <tr>
-
                 <th>Nama</th>
-
                 <th>WhatsApp</th>
-
                 <th>Wilayah</th>
-
                 <th>Alamat</th>
-
                 <th>Qty</th>
-
                 <th>Pembayaran</th>
-
                 <th>Total</th>
-
                 <th>Bukti</th>
-
                 <th>Status</th>
-
                 <th>Waktu</th>
-
                 <th>Aksi</th>
-
               </tr>
-
             </thead>
 
-            <tbody id="orderTable">
-
-              <!-- AUTO FIREBASE -->
-
-            </tbody>
+            <tbody id="orderTable"></tbody>
 
           </table>
 
@@ -300,57 +179,55 @@
 
   </div>
 
-  <!-- =========================================
-       PREVIEW IMAGE
-  ========================================= -->
+  <div class="preview-modal" id="previewModal">
 
-  <div
-    class="preview-modal"
-    id="previewModal"
-  >
-
-    <button
-      class="close-preview"
-      id="closePreview"
-    >
-
+    <button class="close-preview" id="closePreview">
       <i class="fa-solid fa-xmark"></i>
-
     </button>
 
-    <img
-      id="previewImage"
-      src=""
-      alt="Preview Bukti"
-    >
+    <img id="previewImage" src="" alt="Preview Bukti">
 
   </div>
 
-  <!-- =========================================
-       AUDIO
-  ========================================= -->
+  <audio id="notifSound" src="/asset/Notifikasi order.wav" preload="auto"></audio>
+  <audio id="successSound" src="/asset/Sound login.wav" preload="auto"></audio>
 
-  <audio
-    id="notifSound"
-    src="/asset/Notifikasi order.wav"
-    preload="auto"
-  ></audio>
+  <script type="module" src="admin.js"></script>
 
-  <audio
-    id="successSound"
-    src="/asset/Sound login.wav"
-    preload="auto"
-  ></audio>
+  <script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('pwaInstallBtn');
 
-  <!-- =========================================
-       SCRIPT
-  ========================================= -->
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker
+          .register('./sw.js')
+          .then(() => console.log('Service Worker aktif'))
+          .catch((err) => console.error('Service Worker gagal', err));
+      });
+    }
 
-  <script
-    type="module"
-    src="admin.js"
-  ></script>
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.remove('hidden');
+    });
 
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User merespons dengan: ${outcome}`);
+      deferredPrompt = null;
+      installBtn.classList.add('hidden');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('Aplikasi SIRAFEST berhasil diinstal ke perangkat!');
+      installBtn.classList.add('hidden');
+    });
+  </script>
 </body>
+
 </html>
 
