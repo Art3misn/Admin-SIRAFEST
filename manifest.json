@@ -1,6 +1,6 @@
 {
   "name": "Admin COD - Jalan Santai",
-  "short_name": " ADMIN SIRAFEST",
+  "short_name": "SIRAFEST",
   "description": "Dashboard Admin Monitoring pemesanan kupon SIRAFEST",
   "start_url": "./index.html",
   "display": "standalone",
