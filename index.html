@@ -1,233 +1,526 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-  <meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin SIRAFEST 2026 · Dashboard</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#69d7e8">
 
-  <title>
-    Admin COD - Jalan Santai
-  </title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#2563eb">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-
-  <link rel="stylesheet" href="./admin.css">
+    <link rel="stylesheet" href="admin.css" />
 </head>
-
 <body>
 
-  <div class="auth-wrapper" id="authWrapper">
+    <!-- ======== LOGIN SCREEN ======== -->
+    <div class="login-wrapper" id="loginWrapper">
+        <div class="login-card">
+            <div class="login-brand">
+                <div class="login-icon">
+                    <i class="fa-solid fa-person-walking"></i>
+                </div>
+                <h2>SIRAFEST</h2>
+                <p>Admin Dashboard</p>
+            </div>
 
-    <div class="auth-card">
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-envelope"></i> Email</label>
+                    <input type="email" id="adminEmail" placeholder="admin@email.com" autocomplete="email" />
+                </div>
 
-      <div class="auth-header">
-        <h2>Login Admin</h2>
-        <p>Masukkan username & password</p>
-      </div>
+                <div class="form-group">
+                    <label><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="adminPassword" placeholder="Masukkan password" autocomplete="current-password" />
+                </div>
 
-      <div class="auth-form" id="loginPanel">
-        <label for="adminUsername">Username</label>
-        <input type="text" id="adminUsername" autocomplete="username" />
+                <div class="login-error" id="loginError" style="display:none;">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Email atau password salah!</span>
+                </div>
 
-        <label for="adminPassword">Password</label>
-        <input type="password" id="adminPassword" autocomplete="current-password" />
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+                </button>
+            </form>
 
-        <button class="auth-btn" id="loginBtn" type="button">
-          Login
-        </button>
-
-        <p class="auth-error" id="loginError" style="display:none"></p>
-      </div>
-      </div>
+            <div class="login-footer">
+                <small>© 2026 SIRAFEST · RW 04 Sirnagalih</small>
+            </div>
+        </div>
     </div>
 
-  </div>
+    <!-- ======== DASHBOARD APP ======== -->
+    <div class="app-wrapper" id="appWrapper" style="display:none;">
 
-  <div class="layout" id="app">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-person-walking"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>SIRAFEST</h2>
+                    <span>Admin Panel</span>
+                </div>
+            </div>
 
-    <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-link active" data-page="dashboard">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                    <span class="badge live">Live</span>
+                </a>
+                <a href="#" class="nav-link" data-page="orders">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>Orders</span>
+                    <span class="badge" id="orderBadge">0</span>
+                </a>
+                <a href="#" class="nav-link" data-page="analytics">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-link" data-page="settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
 
-      <h2>
-        SIRAFEST
-      </h2>
+            <div class="sidebar-footer">
+                <div class="admin-info">
+                    <div class="admin-avatar">
+                        <i class="fa-solid fa-user"></i>
+                        <span class="online-dot"></span>
+                    </div>
+                    <div class="admin-details">
+                        <span class="admin-name" id="adminName">Admin</span>
+                        <span class="admin-role">Super Admin</span>
+                    </div>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
 
-      <p>
-        Admin Dashboard
-      </p>
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
 
-      <div class="menu">
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="mobileToggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="page-title">
+                        <h1 id="pageTitle">Dashboard</h1>
+                        <p id="pageSubtitle">Overview pemesanan kupon</p>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <div class="topbar-date">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span id="currentDate"></span>
+                    </div>
+                    <button class="refresh-btn" id="refreshBtn">
+                        <i class="fa-solid fa-rotate"></i>
+                        <span>Refresh</span>
+                    </button>
+                    <button id="pwaInstallBtn" class="install-btn hidden">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Install</span>
+                    </button>
+                </div>
+            </header>
 
-        <a href="#orders">
-          <i class="fa-solid fa-cart-shopping"></i>
-          Orders
-        </a>
+            <!-- =========================================
+                 DASHBOARD PAGE
+            ========================================== -->
+            <div class="page-content" id="pageDashboard">
 
-        <a href="#">
-          <i class="fa-solid fa-chart-line"></i>
-          Statistik
-        </a>
+                <!-- STATS GRID -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Total Orders</span>
+                            <h2 class="stat-number" id="totalOrders">0</h2>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            <span>+12%</span>
+                        </div>
+                    </div>
 
-        <a href="javascript:void(0)" onclick="logoutAdmin()">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          Log out
-        </a>
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Pending</span>
+                            <h2 class="stat-number" id="pendingOrders">0</h2>
+                        </div>
+                        <div class="stat-change neutral">
+                            <i class="fa-solid fa-minus"></i>
+                            <span>Waiting</span>
+                        </div>
+                    </div>
 
-      </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Completed</span>
+                            <h2 class="stat-number" id="completedOrders">0</h2>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            <span>+8%</span>
+                        </div>
+                    </div>
 
-    </aside>
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Total Revenue</span>
+                            <h2 class="stat-number" id="totalRevenue">Rp0</h2>
+                        </div>
+                        <div class="stat-change positive">
+                            <i class="fa-solid fa-arrow-up"></i>
+                            <span>+5%</span>
+                        </div>
+                    </div>
+                </section>
 
-    <main class="main">
+                <!-- CHARTS & TICKET -->
+                <section class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Order Overview</h3>
+                            <span class="chart-period">Last 7 days</span>
+                        </div>
+                        <canvas id="ordersChart"></canvas>
+                    </div>
 
-      <div class="topbar">
-        <div>
-          <h1>Dashboard Admin</h1>
-          <p>Monitoring pemesanan kupon SIRAFEST</p>
+                    <div class="ticket-card">
+                        <div class="ticket-header">
+                            <h3><i class="fa-solid fa-ticket"></i> Ticket Sales</h3>
+                            <span class="ticket-total" id="ticketText">0 / 1000</span>
+                        </div>
+                        <div class="ticket-visual">
+                            <div class="ticket-fill-wrapper">
+                                <div class="ticket-fill" id="ticketFill" style="width:0%"></div>
+                            </div>
+                            <div class="ticket-percentage" id="ticketPercentage">0%</div>
+                        </div>
+                        <div class="ticket-details">
+                            <div class="ticket-detail">
+                                <span class="label">Sold</span>
+                                <span class="value" id="ticketSold">0</span>
+                            </div>
+                            <div class="ticket-detail">
+                                <span class="label">Remaining</span>
+                                <span class="value" id="ticketRemaining">1000</span>
+                            </div>
+                            <div class="ticket-detail">
+                                <span class="label">Revenue</span>
+                                <span class="value" id="ticketRevenue">Rp0</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FILTER & TABLE -->
+                <section class="table-section" id="ordersSection">
+                    <div class="table-header">
+                        <div class="table-title">
+                            <h2><i class="fa-solid fa-list"></i> Order List</h2>
+                            <p>Real-time order data from customers</p>
+                        </div>
+                        <div class="table-filters">
+                            <select id="filterStatus" class="filter-select">
+                                <option value="all">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="processed">Processed</option>
+                                <option value="done">Completed</option>
+                            </select>
+                            <div class="table-search">
+                                <i class="fa-solid fa-search"></i>
+                                <input type="text" id="searchInput" placeholder="Search orders..." />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Customer</th>
+                                    <th>WhatsApp</th>
+                                    <th>Address</th>
+                                    <th>Qty</th>
+                                    <th>Payment</th>
+                                    <th>Total</th>
+                                    <th>Proof</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTable">
+                                <tr>
+                                    <td colspan="11" class="loading-state">
+                                        <div class="loader"></div>
+                                        <span>Loading orders...</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="table-footer">
+                        <span class="table-info" id="tableInfo">Showing 0 entries</span>
+                        <div class="table-pagination">
+                            <button class="page-btn" id="prevPage"><i class="fa-solid fa-chevron-left"></i></button>
+                            <span class="page-info" id="pageInfo">1 / 1</span>
+                            <button class="page-btn" id="nextPage"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- =========================================
+                 ORDERS PAGE (Full List)
+            ========================================== -->
+            <div class="page-content" id="pageOrders" style="display:none;">
+                <div class="page-header">
+                    <h2><i class="fa-solid fa-cart-shopping"></i> All Orders</h2>
+                    <p>Complete list of all customer orders</p>
+                </div>
+                <div class="table-section">
+                    <div class="table-header">
+                        <div class="table-title">
+                            <h2>Orders</h2>
+                            <p>All transactions</p>
+                        </div>
+                        <div class="table-actions">
+                            <button class="btn-export" id="exportOrdersBtn">
+                                <i class="fa-solid fa-file-export"></i> Export CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Customer</th>
+                                    <th>WhatsApp</th>
+                                    <th>Qty</th>
+                                    <th>Payment</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersFullTable">
+                                <tr>
+                                    <td colspan="8" class="loading-state">
+                                        <div class="loader"></div>
+                                        <span>Loading orders...</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================================
+                 ANALYTICS PAGE
+            ========================================== -->
+            <div class="page-content" id="pageAnalytics" style="display:none;">
+                <div class="page-header">
+                    <h2><i class="fa-solid fa-chart-line"></i> Analytics</h2>
+                    <p>Tournament statistics & insights</p>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card full">
+                        <h3>Order Trend</h3>
+                        <canvas id="analyticsChart"></canvas>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Payment Methods</h3>
+                        <canvas id="paymentPieChart"></canvas>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Daily Stats</h3>
+                        <div class="daily-stats" id="dailyStats">
+                            <div class="daily-item">
+                                <span class="daily-label">Today</span>
+                                <span class="daily-value" id="todayOrders">0</span>
+                            </div>
+                            <div class="daily-item">
+                                <span class="daily-label">This Week</span>
+                                <span class="daily-value" id="weekOrders">0</span>
+                            </div>
+                            <div class="daily-item">
+                                <span class="daily-label">This Month</span>
+                                <span class="daily-value" id="monthOrders">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =========================================
+                 SETTINGS PAGE
+            ========================================== -->
+            <div class="page-content" id="pageSettings" style="display:none;">
+                <div class="page-header">
+                    <h2><i class="fa-solid fa-gear"></i> Settings</h2>
+                    <p>System configuration</p>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fa-solid fa-ticket"></i> Ticket Settings</h3>
+                        <div class="settings-group">
+                            <label>Total Tickets</label>
+                            <div class="settings-input-group">
+                                <input type="number" id="totalTicketsInput" value="1000" min="1" max="9999" />
+                                <button class="settings-btn" id="updateTicketsBtn">Update</button>
+                            </div>
+                            <p class="settings-hint">Current: <span id="currentTicketsDisplay">1000</span> tickets</p>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fa-solid fa-money-bill"></i> Price Settings</h3>
+                        <div class="settings-group">
+                            <label>Price per Ticket (Rp)</label>
+                            <div class="settings-input-group">
+                                <input type="number" id="priceInput" value="2500" min="0" step="500" />
+                                <button class="settings-btn" id="updatePriceBtn">Update</button>
+                            </div>
+                            <p class="settings-hint">Current: Rp <span id="currentPriceDisplay">2.500</span></p>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fa-solid fa-calendar"></i> Event Date</h3>
+                        <div class="settings-group">
+                            <label>Event Date</label>
+                            <div class="settings-input-group">
+                                <input type="datetime-local" id="eventDateInput" />
+                                <button class="settings-btn" id="updateDateBtn">Update</button>
+                            </div>
+                            <p class="settings-hint">Current: <span id="currentDateDisplay">Not set</span></p>
+                        </div>
+                    </div>
+
+                    <div class="settings-card danger">
+                        <h3><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</h3>
+                        <div class="settings-group">
+                            <button class="settings-btn danger" id="clearDataBtn">
+                                <i class="fa-solid fa-trash"></i> Clear All Data
+                            </button>
+                            <button class="settings-btn danger" id="resetSettingsBtn">
+                                <i class="fa-solid fa-rotate"></i> Reset Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ======== IMAGE PREVIEW MODAL ======== -->
+    <div class="modal-overlay" id="imageModal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="modalImage" src="" alt="Proof" />
         </div>
+    </div>
 
-        <div class="topbar-actions">
-          <button id="pwaInstallBtn" class="install-btn hidden" type="button" aria-label="Install aplikasi">
-            <i class="fa-solid fa-download"></i>
-            <span>Install Aplikasi</span>
-          </button>
+    <!-- ======== TOAST NOTIFICATION ======== -->
+    <div class="toast-container" id="toastContainer"></div>
 
-          <button class="refresh-btn" onclick="location.reload()" type="button" aria-label="Refresh">
-            <i class="fa-solid fa-rotate"></i>
-            <span>Refresh</span>
-          </button>
-        </div>
-      </div>
+    <!-- ======== NOTIFICATION SOUNDS ======== -->
+    <audio id="notifSound" src="asset/Notifikasi order.wav" preload="auto"></audio>
+    <audio id="successSound" src="asset/Sound login.wav" preload="auto"></audio>
 
-      <div class="stats">
+    <!-- ======== SCRIPTS ======== -->
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"
+            }
+        }
+    </script>
 
-        <div class="card">
-          <h3 id="totalOrders">0</h3>
-          <p>Total Order</p>
-        </div>
+    <script type="module" src="admin.js"></script>
 
-        <div class="card">
-          <h3 id="pendingOrders">0</h3>
-          <p>Pending</p>
-        </div>
+    <script>
+        // PWA Install
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwaInstallBtn');
 
-        <div class="card">
-          <h3 id="completedOrders">0</h3>
-          <p>Selesai</p>
-        </div>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker
+                    .register('./sw.js')
+                    .then(() => console.log('Service Worker aktif'))
+                    .catch((err) => console.error('Service Worker gagal', err));
+            });
+        }
 
-        <div class="card">
-          <h3 id="totalRevenue">Rp0</h3>
-          <p>Total Pendapatan</p>
-        </div>
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.remove('hidden');
+        });
 
-      </div>
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User merespons dengan: ${outcome}`);
+            deferredPrompt = null;
+            installBtn.classList.add('hidden');
+        });
 
-      <div class="filter-bar">
-
-        <input type="text" id="search" placeholder="Cari nama / WhatsApp...">
-
-        <select id="filterStatus">
-
-          <option value="">Semua Status</option>
-          <option value="pending">Pending</option>
-          <option value="processed">Diproses</option>
-          <option value="done">Selesai</option>
-
-        </select>
-
-      </div>
-
-      <section id="orders" class="table-section">
-
-        <div class="table-wrapper">
-
-          <table>
-
-            <thead>
-              <tr>
-                <th>Nama</th>
-                <th>WhatsApp</th>
-                <th>Wilayah</th>
-                <th>Alamat</th>
-                <th>Qty</th>
-                <th>Pembayaran</th>
-                <th>Total</th>
-                <th>Bukti</th>
-                <th>Status</th>
-                <th>Waktu</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-
-            <tbody id="orderTable"></tbody>
-
-          </table>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
-
-  <div class="preview-modal" id="previewModal">
-
-    <button class="close-preview" id="closePreview">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <img id="previewImage" src="" alt="Preview Bukti">
-
-  </div>
-
-  <audio id="notifSound" src="/asset/Notifikasi order.wav" preload="auto"></audio>
-  <audio id="successSound" src="/asset/Sound login.wav" preload="auto"></audio>
-
-  <script type="module" src="admin.js"></script>
-
-  <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById('pwaInstallBtn');
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker
-          .register('./sw.js')
-          .then(() => console.log('Service Worker aktif'))
-          .catch((err) => console.error('Service Worker gagal', err));
-      });
-    }
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.classList.remove('hidden');
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`User merespons dengan: ${outcome}`);
-      deferredPrompt = null;
-      installBtn.classList.add('hidden');
-    });
-
-    window.addEventListener('appinstalled', () => {
-      console.log('Aplikasi SIRAFEST berhasil diinstal ke perangkat!');
-      installBtn.classList.add('hidden');
-    });
-  </script>
+        window.addEventListener('appinstalled', () => {
+            console.log('Aplikasi SIRAFEST berhasil diinstal!');
+            installBtn.classList.add('hidden');
+        });
+    </script>
 </body>
-
 </html>
-
